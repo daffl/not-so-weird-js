@@ -369,7 +369,7 @@ html, body {
 }
 
 body {
-  font-family: serif;
+  font-family: sans-serif;
   font-weight: 100;
   color: #333333;
   margin: 0;
@@ -377,6 +377,10 @@ body {
 
 a {
   color: #EF2537;
+}
+
+h1, h2, h3 {
+  font-family: serif;
 }
 
 h1 {
@@ -554,14 +558,15 @@ pre {
   height: 10px;
 }
 
-.intro {
-  background: url('img/main-background.svg') transparent;
-  background-size: cover;
+.intro h1 {
+  color: #333333;
+  margin-bottom: 8%;
 }
 
-.intro h1 {
-  margin-top: 15%;
-  color: #F3F3F3;
+.intro h2 {
+  font-family: sans-serif;
+  font-size: 150%;
+  color: #333333;
 }
 
 .standardization {
@@ -575,43 +580,13 @@ pre {
     <div class="progress-bar"></div>
   </div>
 
-  <div class="slide" id="slide-1">
+  <div class="slide  intro" id="slide-1">
     <section class="slide-content"><h1 id="javascript-the-not-so-weird-anymore-parts">JavaScript - The not so weird (anymore) parts</h1>
+<h2 id="by-daffl-https-twitter-com-daffl-">By <a href="https://twitter.com/daffl">@daffl</a></h2>
+<h2 id="-daffl-github-io-not-so-weird-js-https-daffl-github-io-not-so-weird-js-"><a href="https://daffl.github.io/not-so-weird-js">daffl.github.io/not-so-weird-js</a></h2>
 </section>
   </div>
   <div class="slide hidden -" id="slide-2">
-    <section class="slide-content"><h2 id="you-know-">You know?</h2>
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Object-oriented_programming"><strong>O</strong>bject <strong>O</strong>riented <strong>P</strong>rogramming</a> basics (classes, objects, inheritance)</li>
-<li>JavaScript language basics<ul>
-<li><strong>Operators</strong> <code>[]</code>, <code>&amp;&amp;</code>, <code>==</code>, <code>||</code> </li>
-<li><strong>Arrays</strong> and <strong>Objects</strong> <code>[].push</code>, <code>{}</code></li>
-<li><strong>Functions</strong> <code>var fn = function(param1, param2) {}</code> </li>
-</ul>
-</li>
-<li>Some jQuery<ul>
-<li><strong>Selectors</strong> <code>tagname</code>, <code>#myId</code>, <code>.class</code></li>
-<li><strong>Event handlers</strong> <code>$(&#39;selector&#39;).click(function() { alert(&#39;clicked&#39;); })</code></li>
-</ul>
-</li>
-</ul>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-3">
-    <section class="slide-content"><h2 id="welcome-to-the-weird-side">Welcome to the weird side</h2>
-<ul>
-<li>functions</li>
-<li>truthy and falsyness</li>
-<li>Equality</li>
-<li>Scope</li>
-<li><code>this</code></li>
-<li>Prototypes</li>
-<li>Asynchronous programming</li>
-<li>ECMAScript</li>
-</ul>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-4">
     <section class="slide-content"><h2 id="ecmascript-es-">ECMAScript (ES)</h2>
 <p>Standard for the JavaScript language</p>
 <ul>
@@ -626,49 +601,179 @@ pre {
 </ul>
 </section>
   </div>
-  <div class="slide hidden - standardization" id="slide-5">
+  <div class="slide hidden - standardization" id="slide-3">
     <section class="slide-content"></section>
   </div>
-  <div class="slide hidden -" id="slide-6">
+  <div class="slide hidden -" id="slide-4">
     <section class="slide-content"><h2 id="transpilers">Transpilers</h2>
+<p>E.g. <a href="https://babeljs.io/">Babel</a>, <a href="https://github.com/google/traceur-compiler">Traceur</a>, <a href="https://github.com/rollup/rollup">Rollup</a></p>
 <ul>
-<li>Babel, Traceur, Rollup<ul>
-<li>Turn new JavaScript (ES2015+) into old</li>
+<li>Turn not weird JavaScript (ES2015+) into weird (old) JavaScript</li>
 <li>Allow support for non-standard and experimental features</li>
 <li>ES modules (<code>import</code>, <code>export</code>)</li>
 <li>JSX</li>
-</ul>
-</li>
 <li>Compile other languages into JavaScript<ul>
-<li>TypeScript</li>
-<li>ClojureScript</li>
+<li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
+<li><a href="https://github.com/clojure/clojurescript">ClojureScript</a></li>
 </ul>
 </li>
 </ul>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-5">
+    <section class="slide-content"><h2 id="weird-ish-truthy-and-falsyness">Weird-ish: Truthy- and falsyness</h2>
+<p><strong>Truthyness</strong></p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> person = { name: <span class="hljs-string">'David'</span> }
+
+<span class="hljs-keyword">if</span>(person.name) {
+    <span class="hljs-comment">// Do stuff if property exists</span>
+}
+
+<span class="hljs-keyword">if</span>(<span class="hljs-number">1</span> == <span class="hljs-number">1</span>) {}</code></pre>
+<p><strong>Falsy values</strong></p>
+<pre><code class="lang-javascript"><span class="hljs-literal">false</span>
+<span class="hljs-literal">null</span>
+<span class="hljs-literal">undefined</span>
+<span class="hljs-number">0</span>
+<span class="hljs-string">''</span>
+person.undefinedProperty</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-6">
+    <section class="slide-content"><h2 id="the-weirdest-ever-">The weirdest ever: <code>==</code>, <code>!=</code></h2>
+<p><code>==</code> and <code>!=</code> compare the value</p>
+<pre><code class="lang-javascript"><span class="hljs-number">1</span> == <span class="hljs-number">1</span> <span class="hljs-comment">// -&gt; true</span>
+<span class="hljs-number">1</span> == <span class="hljs-string">'1'</span> <span class="hljs-comment">// -&gt; true</span>
+<span class="hljs-number">1</span> == <span class="hljs-number">2</span> <span class="hljs-comment">// -&gt; false</span>
+
+<span class="hljs-comment">// Now things get weird</span>
+<span class="hljs-string">''</span> == <span class="hljs-literal">false</span> <span class="hljs-comment">// -&gt; true</span>
+[] == <span class="hljs-literal">false</span> <span class="hljs-comment">// -&gt; true</span>
+<span class="hljs-literal">null</span> == <span class="hljs-literal">undefined</span> <span class="hljs-comment">// -&gt; true</span></code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-7">
-    <section class="slide-content"><h2 id="variable-declarations">Variable declarations</h2>
+    <section class="slide-content"><h2 id="not-so-weird-">Not so weird: <code>===</code>, <code>!==</code></h2>
+<p><code>===</code> and <code>!==</code> compare value <em>and</em> type</p>
+<pre><code class="lang-javascript"><span class="hljs-number">1</span> === <span class="hljs-number">1</span> <span class="hljs-comment">// -&gt; true</span>
+<span class="hljs-number">1</span> === <span class="hljs-string">'1'</span> <span class="hljs-comment">// -&gt; false</span>
+<span class="hljs-number">1</span> === <span class="hljs-built_in">parseInt</span>(<span class="hljs-string">'1'</span>, <span class="hljs-number">10</span>) <span class="hljs-comment">// -&gt; true</span>
+[] === <span class="hljs-literal">false</span> <span class="hljs-comment">// -&gt; false</span>
+<span class="hljs-literal">null</span> === <span class="hljs-literal">undefined</span> <span class="hljs-comment">// -&gt; false</span></code></pre>
+<h4 id="always-use-and-">ALWAYS USE <code>===</code> and <code>!==</code></h4>
 </section>
   </div>
   <div class="slide hidden -" id="slide-8">
-    <section class="slide-content"><h2 id="warm-up-">Warm up...</h2>
-<p>Accessing object properties</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> person = {
-  name: <span class="hljs-string">'david'</span>,
-  <span class="hljs-string">'&amp;weird property'</span>: <span class="hljs-string">'YYCJS'</span>
+    <section class="slide-content"><h2 id="weird-var-">Weird: <code>var</code></h2>
+<p><code>var</code> declares a variable that can be reassigned and redeclared and is scoped to the function.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {}
+
+<span class="hljs-built_in">console</span>.log(i); <span class="hljs-comment">// 10</span>
+
+<span class="hljs-keyword">if</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">var</span> i = <span class="hljs-number">20</span>;
+
+    <span class="hljs-keyword">var</span> i = <span class="hljs-number">30</span>;
 }
 
-person.name <span class="hljs-comment">// -&gt; David</span>
-person[<span class="hljs-string">'name'</span>] <span class="hljs-comment">// -&gt; David</span>
-person[<span class="hljs-string">"name"</span>] <span class="hljs-comment">// -&gt; David</span>
-person[<span class="hljs-string">'&amp;weird property'</span>] <span class="hljs-comment">// -&gt; YYCJS</span>
-
-<span class="hljs-comment">// ERROR</span>
-person.&amp;weird property</code></pre>
+<span class="hljs-built_in">console</span>.log(i); <span class="hljs-comment">// 30</span></code></pre>
 </section>
   </div>
   <div class="slide hidden -" id="slide-9">
+    <section class="slide-content"><h2 id="very-weird-globals">Very weird: globals</h2>
+<p>Variables declared without anything <a href="https://github.com/DmitryBaranovskiy/raphael/issues/934">will automatically become global</a></p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> local, local2 = <span class="hljs-number">42</span>;
+    global = <span class="hljs-string">'global'</span>;
+}</code></pre>
+<p>Instead, make declarations explicit and globals attached to the <code>window</code> object (browsers):</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> local;
+    <span class="hljs-keyword">var</span> local2 = <span class="hljs-number">42</span>;
+    <span class="hljs-built_in">window</span>.global = <span class="hljs-string">'global'</span>;
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-10">
+    <section class="slide-content"><h2 id="not-so-weird-let-">Not so weird: <code>let</code></h2>
+<p><code>let</code> declares a variable that can be reassigned but not redeclared and is scoped to the block.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {}
+
+<span class="hljs-built_in">console</span>.log(i); <span class="hljs-comment">// ReferenceError: i is not defined</span>
+
+<span class="hljs-keyword">if</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">let</span> i = <span class="hljs-number">20</span>;
+    i = <span class="hljs-number">10</span>;
+    <span class="hljs-built_in">console</span>.log(i); <span class="hljs-comment">// 10</span>
+
+    <span class="hljs-keyword">let</span> i = <span class="hljs-number">2</span>; <span class="hljs-comment">// SyntaxError: Identifier 'i' has already been declared</span>
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-11">
+    <section class="slide-content"><h2 id="not-so-weird-const-">Not so weird: <code>const</code></h2>
+<p><code>const</code> declares a variable that can be reassigned but not redeclared and is scoped to the block.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">if</span>(<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">const</span> i = <span class="hljs-number">20</span>;
+    i = <span class="hljs-number">10</span>; <span class="hljs-comment">// TypeError: Assignment to constant variable</span>
+
+    <span class="hljs-keyword">const</span> i = <span class="hljs-number">2</span>; <span class="hljs-comment">// SyntaxError: Identifier 'i' has already been declared</span>
+}
+
+<span class="hljs-built_in">console</span>.log(i); <span class="hljs-comment">// ReferenceError: i is not defined</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-12">
+    <section class="slide-content"><h2 id="kind-of-weird-object-declarations">Kind of weird: Object declarations</h2>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> key = <span class="hljs-string">'type'</span>;
+<span class="hljs-keyword">var</span> firstName = <span class="hljs-string">'David'</span>;
+
+<span class="hljs-keyword">var</span> user = {
+    firstName: firstName,
+    lastName: <span class="hljs-string">'Luecke'</span>,
+    fullName: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-keyword">this</span>.lastName;
+    }
+}
+
+user[key] = <span class="hljs-string">'user'</span>;</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-13">
+    <section class="slide-content"><h2 id="not-so-weird-object-shorthands">Not so weird: Object shorthands</h2>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> firstName = <span class="hljs-string">'David'</span>;
+<span class="hljs-keyword">const</span> user = {
+    [key]: <span class="hljs-string">'user'</span>,
+    firstName,
+    lastName: <span class="hljs-string">'Luecke'</span>,
+    fullName() {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${this.firstName}</span> <span class="hljs-subst">${this.lastName}</span>`</span>;
+    }
+}</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-14">
+    <section class="slide-content"><h2 id="awesome-destructuring">Awesome: Destructuring</h2>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> user = {
+    name: <span class="hljs-string">'David'</span>,
+    likes: [ <span class="hljs-string">'ice cream'</span>, <span class="hljs-string">'rock climbing'</span> ],
+    address: {
+        city: <span class="hljs-string">'Vancouver'</span>
+    }
+}
+
+<span class="hljs-keyword">const</span> { name } = user; <span class="hljs-comment">// name = 'David'</span>
+<span class="hljs-comment">// Nested</span>
+<span class="hljs-keyword">const</span> { address: { city } } = user; <span class="hljs-comment">// city = 'Vancouver'</span>
+<span class="hljs-comment">// From arrays</span>
+<span class="hljs-keyword">const</span> { likes: [, secondLike ] } = user; <span class="hljs-comment">// secondLike = 'rock climbing'</span>
+<span class="hljs-comment">// Aliased</span>
+<span class="hljs-keyword">const</span> { name: username } = user; <span class="hljs-comment">// username = 'David'</span>
+<span class="hljs-comment">// Defaults</span>
+<span class="hljs-keyword">const</span> { address: { country = <span class="hljs-string">'Canada'</span> } } = user; <span class="hljs-comment">// country = 'Canada'</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-15">
     <section class="slide-content"><h2 id="functions-and-arguments-">Functions and <code>arguments</code></h2>
 <p>Functions are treated just like any other variable:</p>
 <pre><code>!javascript
@@ -692,52 +797,7 @@ function sum() {
 sum(1, 2, 3, 4); // -&gt; 10</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-10">
-    <section class="slide-content"><h2 id="truthy-and-falsyness">Truthy- and falsyness</h2>
-<p><strong>Truthyness</strong></p>
-<pre><code>!javascript
-var person = { name: &#39;David&#39; }
-
-if(person.name) {
-  // Do stuff if property exists
-}
-
-if(1 == 1) {
-
-}</code></pre>
-<p><strong>Falsy values</strong></p>
-<pre><code>!javascript
-false
-null
-undefined
-0
-&#39;&#39;
-person.undefinedProperty</code></pre>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-11">
-    <section class="slide-content"><h2 id="equality-or-vs-">Equality or <code>==</code> vs <code>===</code></h2>
-<p><code>==</code> and <code>!=</code> compare the value</p>
-<pre><code>!javascript
-1 == 1 // -&gt; true
-1 == &#39;1&#39; // -&gt; true
-1 == 2 // -&gt; false
-
-// Now things get weird
-&#39;&#39; == false // -&gt; true
-[] == false // -&gt; true
-null == undefined // -&gt; true</code></pre>
-<p><code>===</code> and <code>!==</code> compare value <em>and</em> type</p>
-<pre><code>!javascript
-1 === 1 // -&gt; true
-1 === &#39;1&#39; // -&gt; false
-1 === parseInt(&#39;1&#39;) // -&gt; true
-[] === false // -&gt; false
-null === undefined // -&gt; false</code></pre>
-<h3 id="always-use-">ALWAYS USE ===</h3>
-</section>
-  </div>
-  <div class="slide hidden -" id="slide-12">
+  <div class="slide hidden -" id="slide-16">
     <section class="slide-content"><h2 id="scope-in-javascript">Scope in JavaScript</h2>
 <p>JavaScript only knows function scope and can access all variables from its parent scopes:</p>
 <pre><code>!javascript
@@ -756,7 +816,7 @@ function count() {
 count();</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-13">
+  <div class="slide hidden -" id="slide-17">
     <section class="slide-content"><h2 id="global-variables">Global variables</h2>
 <p>Variables declared without <code>var</code> will automatically become global</p>
 <pre><code>!javascript
@@ -777,7 +837,7 @@ function test() {
 test();</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-14">
+  <div class="slide hidden -" id="slide-18">
     <section class="slide-content"><h2 id="closures">Closures</h2>
 <p>Introduce a new scope by passing variables to a wrapper function.</p>
 <pre><code>!javascript
@@ -794,7 +854,7 @@ for(var i = 0; i &lt; 10; i++) {
 }</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-15">
+  <div class="slide hidden -" id="slide-19">
     <section class="slide-content"><h2 id="what-is-this-">What is <code>this</code>?</h2>
 <p>In JavaScript <code>this</code> refers to the <em>owner</em> of the function you are calling, e.g. with</p>
 <p><strong>Objects</strong></p>
@@ -814,7 +874,7 @@ $(&#39;button&#39;).click(function() {
 });</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-16">
+  <div class="slide hidden -" id="slide-20">
     <section class="slide-content"><h2 id="the-trinity-of-this-">The Trinity of <code>this</code></h2>
 <p>There are three rules for what <code>this</code> can be:</p>
 <p>1) <strong>The object</strong>, when the function is called on an object</p>
@@ -832,7 +892,7 @@ var boundSayHi = sayHi.bind(owner);</code></pre>
 <p>Otherwise <code>this</code> will be the global (<code>window</code>) object (or <code>undefined</code> in strict mode).</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-17">
+  <div class="slide hidden -" id="slide-21">
     <section class="slide-content"><h2 id="-this-and-callbacks"><code>this</code> and callbacks</h2>
 <p>Callbacks are used for asynchronous operations (the A in Ajax). </p>
 <p>Always remember that in the callback you will loose the original <code>this</code>:</p>
@@ -850,11 +910,11 @@ $(&#39;button&#39;).click(function() {
 <h1 id="prototypes">Prototypes</h1>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-18">
+  <div class="slide hidden -" id="slide-22">
     <section class="slide-content"><h2 id="classes-vs-prototypes">Classes vs. Prototypes</h2>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-19">
+  <div class="slide hidden -" id="slide-23">
     <section class="slide-content"><h2 id="javascript-only-knows-objects">JavaScript only knows objects</h2>
 <p>Inheritance by pointing an objects prototype to another object.</p>
 <pre><code>!javascript
@@ -879,7 +939,7 @@ var Cat = function() {
 Cat.prototype = new Animal();</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-20">
+  <div class="slide hidden -" id="slide-24">
     <section class="slide-content"><h2 id="overriding-existing-methods">Overriding existing methods</h2>
 <p>If you want to overwrite an existing method but use the old result you
 need to <code>call</code> or <code>apply</code> the old function with the current <code>this</code> reference and <code>arguments</code>:</p>
@@ -896,7 +956,7 @@ alert(goofy.makeSound());
 alert(garfield.makeSound());</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-21">
+  <div class="slide hidden -" id="slide-25">
     <section class="slide-content"><h2 id="the-true-ecmascript-5-way">The true ECMAScript 5 way</h2>
 <p>Uses only objects and inherits with <code>Object.create(prototypeObject)</code></p>
 <pre><code>!javascript
@@ -920,7 +980,7 @@ alert(goofy.makeSound());
 alert(garfield.makeSound();</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-22">
+  <div class="slide hidden -" id="slide-26">
     <section class="slide-content"></section>
   </div>
 

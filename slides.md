@@ -3,35 +3,12 @@ output: index.html
 theme: theme
 controls: false
 
---
+-- intro
 
 # JavaScript - The not so weird (anymore) parts
 
----
-
-## You know?
-
-- [__O__bject __O__riented __P__rogramming](http://en.wikipedia.org/wiki/Object-oriented_programming) basics (classes, objects, inheritance)
-- JavaScript language basics
-    - __Operators__ `[]`, `&&`, `==`, `||` 
-    - __Arrays__ and __Objects__ `[].push`, `{}`
-    - __Functions__ `var fn = function(param1, param2) {}` 
-- Some jQuery
-    - __Selectors__ `tagname`, `#myId`, `.class`
-    - __Event handlers__ `$('selector').click(function() { alert('clicked'); })`
-
----
-
-## Welcome to the weird side
-
-- functions
-- truthy and falsyness
-- Equality
-- Scope
-- `this`
-- Prototypes
-- Asynchronous programming
-- ECMAScript
+## By [@daffl](https://twitter.com/daffl)
+## [daffl.github.io/not-so-weird-js](https://daffl.github.io/not-so-weird-js)
 
 ---
 
@@ -54,38 +31,213 @@ Standard for the JavaScript language
 
 ## Transpilers
 
-- Babel, Traceur, Rollup
-    - Turn new JavaScript (ES2015+) into old
-    - Allow support for non-standard and experimental features
-    - ES modules (`import`, `export`)
-    - JSX
+E.g. [Babel](https://babeljs.io/), [Traceur](https://github.com/google/traceur-compiler), [Rollup](https://github.com/rollup/rollup)
+
+- Turn not weird JavaScript (ES2015+) into weird (old) JavaScript
+- Allow support for non-standard and experimental features
+- ES modules (`import`, `export`)
+- JSX
 - Compile other languages into JavaScript
-    - TypeScript
-    - ClojureScript
+    - [TypeScript](https://www.typescriptlang.org/)
+    - [ClojureScript](https://github.com/clojure/clojurescript)
 
 ---
 
-## Variable declarations
+## Weird-ish: Truthy- and falsyness
 
----
-
-## Warm up...
-
-Accessing object properties
+__Truthyness__
 
 ```javascript
-var person = {
-  name: 'david',
-  '&weird property': 'YYCJS'
+const person = { name: 'David' }
+
+if(person.name) {
+    // Do stuff if property exists
 }
 
-person.name // -> David
-person['name'] // -> David
-person["name"] // -> David
-person['&weird property'] // -> YYCJS
+if(1 == 1) {}
+```
 
-// ERROR
-person.&weird property
+__Falsy values__
+
+```javascript
+false
+null
+undefined
+0
+''
+person.undefinedProperty
+```
+
+---
+
+## The weirdest ever: `==`, `!=`
+
+`==` and `!=` compare the value
+
+```javascript
+1 == 1 // -> true
+1 == '1' // -> true
+1 == 2 // -> false
+
+// Now things get weird
+'' == false // -> true
+[] == false // -> true
+null == undefined // -> true
+```
+
+---
+
+## Not so weird: `===`, `!==`
+
+`===` and `!==` compare value _and_ type
+
+```javascript
+1 === 1 // -> true
+1 === '1' // -> false
+1 === parseInt('1', 10) // -> true
+[] === false // -> false
+null === undefined // -> false
+```
+
+#### ALWAYS USE `===` and `!==`
+
+---
+
+## Weird: `var`
+
+`var` declares a variable that can be reassigned and redeclared and is scoped to the function.
+
+```javascript
+for(var i = 0; i < 10; i++) {}
+
+console.log(i); // 10
+
+if(true) {
+    var i = 20;
+
+    var i = 30;
+}
+
+console.log(i); // 30
+```
+
+---
+
+## Very weird: globals
+
+Variables declared without anything [will automatically become global](https://github.com/DmitryBaranovskiy/raphael/issues/934)
+
+```js
+function test() {
+    var local, local2 = 42;
+    global = 'global';
+}
+```
+
+Instead, make declarations explicit and globals attached to the `window` object (browsers):
+
+```javascript
+function test() {
+    var local;
+    var local2 = 42;
+    window.global = 'global';
+}
+```
+
+---
+
+## Not so weird: `let`
+
+`let` declares a variable that can be reassigned but not redeclared and is scoped to the block.
+
+```javascript
+for(let i = 0; i < 10; i++) {}
+
+console.log(i); // ReferenceError: i is not defined
+
+if(true) {
+    let i = 20;
+    i = 10;
+    console.log(i); // 10
+
+    let i = 2; // SyntaxError: Identifier 'i' has already been declared
+}
+```
+
+---
+
+## Not so weird: `const`
+
+`const` declares a variable that can be reassigned but not redeclared and is scoped to the block.
+
+```javascript
+if(true) {
+    const i = 20;
+    i = 10; // TypeError: Assignment to constant variable
+
+    const i = 2; // SyntaxError: Identifier 'i' has already been declared
+}
+
+console.log(i); // ReferenceError: i is not defined
+```
+
+---
+
+## Kind of weird: Object declarations
+
+```javascript
+var key = 'type';
+var firstName = 'David';
+
+var user = {
+    firstName: firstName,
+    lastName: 'Luecke',
+    fullName: function() {
+        return this.firstName + ' ' + this.lastName;
+    }
+}
+
+user[key] = 'user';
+```
+
+---
+
+## Not so weird: Object shorthands
+
+```javascript
+const firstName = 'David';
+const user = {
+    [key]: 'user',
+    firstName,
+    lastName: 'Luecke',
+    fullName() {
+        return `${this.firstName} ${this.lastName}`;
+    }
+}
+```
+
+---
+
+## Awesome: Destructuring
+
+```javascript
+const user = {
+    name: 'David',
+    likes: [ 'ice cream', 'rock climbing' ],
+    address: {
+        city: 'Vancouver'
+    }
+}
+
+const { name } = user; // name = 'David'
+// Nested
+const { address: { city } } = user; // city = 'Vancouver'
+// From arrays
+const { likes: [, secondLike ] } = user; // secondLike = 'rock climbing'
+// Aliased
+const { name: username } = user; // username = 'David'
+// Defaults
+const { address: { country = 'Canada' } } = user; // country = 'Canada'
 ```
 
 ---
@@ -115,61 +267,6 @@ Functions are treated just like any other variable:
     }
 
     sum(1, 2, 3, 4); // -> 10
-
----
-
-## Truthy- and falsyness
-
-__Truthyness__
-
-    !javascript
-    var person = { name: 'David' }
-    
-    if(person.name) {
-      // Do stuff if property exists
-    }
-
-    if(1 == 1) {
-
-    }
-
-__Falsy values__
-
-    !javascript
-    false
-    null
-    undefined
-    0
-    ''
-    person.undefinedProperty
-
----
-
-## Equality or `==` vs `===`
-
-`==` and `!=` compare the value
-
-    !javascript
-    1 == 1 // -> true
-    1 == '1' // -> true
-    1 == 2 // -> false
-
-    // Now things get weird
-    '' == false // -> true
-    [] == false // -> true
-    null == undefined // -> true
-
-`===` and `!==` compare value _and_ type
-
-    !javascript
-    1 === 1 // -> true
-    1 === '1' // -> false
-    1 === parseInt('1') // -> true
-    [] === false // -> false
-    null === undefined // -> false
-
-
-### ALWAYS USE ===
 
 ---
 
