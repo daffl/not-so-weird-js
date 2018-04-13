@@ -12,6 +12,20 @@ controls: false
 
 ---
 
+## The weird and not so weird
+
+- ECMAScript
+- JavaScript tooling
+- Truthy and falsyness
+- Operators
+- `var`, `let`, `const`, globals
+- Object declarations
+- Destructuring
+- Functions and `this`
+- Inheritance
+
+---
+
 ## ECMAScript (ES)
 
 Standard for the JavaScript language
@@ -29,15 +43,15 @@ Standard for the JavaScript language
 
 ---
 
-## Transpilers
+## JavaScript tooling
 
-E.g. [Babel](https://babeljs.io/), [Traceur](https://github.com/google/traceur-compiler), [Rollup](https://github.com/rollup/rollup)
-
-- Turn not weird JavaScript (ES2015+) into weird (old) JavaScript
-- Allow support for non-standard and experimental features
-- ES modules (`import`, `export`)
-- JSX
-- Compile other languages into JavaScript
+- Code quality tools ([ESLint](https://eslint.org/), [prettier](https://github.com/prettier/prettier))
+- Transpilers ([Babel](https://babeljs.io/), [Traceur](https://github.com/google/traceur-compiler), [Rollup](https://github.com/rollup/rollup))
+    - Turn not weird JavaScript (ES2015+) into weird (old) JavaScript
+    - Allow support for non-standard and experimental features
+    - ES modules (`import`, `export`)
+    - JSX
+- Compile-to JavaScript languages
     - [TypeScript](https://www.typescriptlang.org/)
     - [ClojureScript](https://github.com/clojure/clojurescript)
 
@@ -53,8 +67,6 @@ const person = { name: 'David' }
 if(person.name) {
     // Do stuff if property exists
 }
-
-if(1 == 1) {}
 ```
 
 __Falsy values__
@@ -70,7 +82,7 @@ person.undefinedProperty
 
 ---
 
-## The weirdest ever: `==`, `!=`
+## The weirdest: `==`, `!=`
 
 `==` and `!=` compare the value
 
@@ -87,7 +99,7 @@ null == undefined // -> true
 
 ---
 
-## Not so weird: `===`, `!==`
+## Not weird: `===`, `!==`
 
 `===` and `!==` compare value _and_ type
 
@@ -129,17 +141,16 @@ Variables declared without anything [will automatically become global](https://g
 
 ```js
 function test() {
-    var local, local2 = 42;
+    var local = 42;
     global = 'global';
 }
 ```
 
-Instead, make declarations explicit and globals attached to the `window` object (browsers):
+Attach to the global (`window` in browser) object explicitly:
 
 ```javascript
 function test() {
-    var local;
-    var local2 = 42;
+    var local = 42;
     window.global = 'global';
 }
 ```
@@ -183,7 +194,7 @@ console.log(i); // ReferenceError: i is not defined
 
 ---
 
-## Kind of weird: Object declarations
+## A little weird: Object declarations
 
 ```javascript
 var key = 'type';
@@ -242,246 +253,196 @@ const { address: { country = 'Canada' } } = user; // country = 'Canada'
 
 ---
 
-## Functions and `arguments`
+## Slightly weird: Functions and `arguments`
 
 Functions are treated just like any other variable:
 
-    !javascript
-    var myFunction = function(arg) {
+```js
+var myFunction = function(arg) {}
+// the same as
+function myFunction(arg) {}
 
+const person = {}
+
+person.sayHi = function() {}
+
+// Magic arguments
+function sum() {
+    var result = 0;
+    for(var i = 0; i < arguments.length; i++) {
+        result += arguments[i];
     }
-    // the same as
-    function myFunction(arg) {
-
-    }
-
-`arguments` is a special array-like variable that contains all parameters passed to the function call:
-
-    !javascript
-    function sum() {
-        var sum = 0;
-        for(var i = 0; i < arguments.length; i++) {
-            sum += arguments[i];
-        }
-        return sum;
-    }
-
-    sum(1, 2, 3, 4); // -> 10
+    return result;
+}
+```
 
 ---
 
-## Scope in JavaScript
+## Not weird: Fancy function arguments
 
-JavaScript only knows function scope and can access all variables from its parent scopes:
+```js
+// Default arguments
+function add(a = 1, b = 2) {}
 
-    !javascript
-    var x = 'outer';
-    function count() {
-        for(var i = 0; i < 10; i++) {
-            var x = 'testing';
-            var inner = function() {
-                var y = 42;
-            }
+// Destructuring arguments
+function parseAddress({ address: { city, country = 'Canada' } }) {}
 
-            inner();
-        }
+// Spread operator (varargs)
+function sum(...numbers) {
+    let result = 0;
+    for(let number of numbers) {
+        result += number;
     }
-
-    count();
+    return result;
+}
+```
 
 ---
 
-## Global variables
+## Weird: The trinity of `this`
 
-Variables declared without `var` will automatically become global
-
-    !javascript
-    function test() {
-        var local = 42;
-        global = 'global';
-    }
-
-    test();
-
-You probably never want that.
-
-If you do, add and access them through the `window` object (browsers) explicitly:
-
-    !javascript
-    function test() {
-        var local = 42;
-        window.global = 'global';
-    }
-
-    test();
-
----
-
-## Closures
-
-Introduce a new scope by passing variables to a wrapper function.
-
-    !javascript
-    for(var i = 0; i < 10; i++) {
-        var button = $('<button>Button #' + i + '</button>');
-        var wrapper = function(counter) {
-            button.click(function() {
-                alert(counter);
-            });
-        }
-        
-        wrapper(i);
-        $('body').append(button);
-    }
-
----
-
-## What is `this`?
-
-In JavaScript `this` refers to the _owner_ of the function you are calling, e.g. with
-
-__Objects__
-
-    !javascript
-    var person = {
-        name: 'David',
-        sayHi: function() {
-            alert('Hello ' + this.name);
-        }
-    }
-
-    person.sayHi();
-
-__jQuery__
-
-    !javascript
-    $('button').click(function() {
-        this.html('Button clicked');
-    });
-
----
-
-## The Trinity of `this`
-
-There are three rules for what `this` can be:
+`this` refers to the _owner_ of the function you are calling.
 
 1) __The object__, when the function is called on an object
 
-    !javascript
-    person.sayHi()
+```js
+person.sayHi()
+```
 
-2) A function is called with the `new` operator
+2) A new object if the function is called with the `new` operator
 
-    !javascript
-    new Dog('Goofy');
+```js
+new Dog('Goofy');
+```
 
 3) The owner has been changed with [call](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call), [apply](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) or [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
 
-    !javascript
-    sayHi.call(owner, arg1, arg2);
-    sayHi.apply(owner, argsArray);
+```js
+sayHi.call(owner, arg1, arg2);
+sayHi.apply(owner, argsArray);
 
-    var boundSayHi = sayHi.bind(owner);
+var boundSayHi = sayHi.bind(owner);
+```
 
 Otherwise `this` will be the global (`window`) object (or `undefined` in strict mode).
 
 ---
 
-## `this` and callbacks
+## Less weird: Arrow functions
 
-Callbacks are used for asynchronous operations (the A in Ajax). 
+Arrow functions `this` is always the same as the `this` of its surrounding context. It can __not__ be changed. Arrow functions do not have magic `arguments`.
 
-Always remember that in the callback you will loose the original `this`:
+```javascript
+// Single line arrow function
+const sum = (a, b) => a + b;
 
-    !javascript
-    $('button').click(function() {
-        // Store the old this reference (the clicked button)
-        var self = this;
+// Multi line
+const sum = (...numbers) => {
+    let result = 0;
+    for(let number of numbers) {
+        result += number;
+    }
+    return result;
+}
+```
 
-        $.getJSON('someFile.json', function(data) {
-            // Set the button content
-            self.html(data.text);
-        });
-    });
-
-___
-
-# Prototypes
+--- inheritance
 
 ---
 
-## Classes vs. Prototypes
+## Kind of weird: JavaScript inheritance
+
+JavaScript only knows objects. Inheritance is done by pointing an objects prototype to another object.
+
+```js
+const Elephant = function() {
+    this.legs = 4;
+    this.hasTrunk = true;
+}
+
+Elephant.prototype.getType = function() {
+    return 'Mammal';
+}
+```
 
 ---
 
-## JavaScript only knows objects
+## Kind of weird: JavaScript inheritance
 
-Inheritance by pointing an objects prototype to another object.
+```js
+const Dogephant = function() {
+    this.hasFur = true;
+}
 
-    !javascript
-    var Animal = function() {
-        this.sound = 'blubb';
-    }
+Dogephant.prototype = new Elephant();
 
-    Animal.prototype.makeSound = function() {
-        return this.sound + '!';
-    }
+const Wienephant = function() {
+    this.isTiny = true;
+}
 
-    var Dog = function() {
-        this.sound = 'Woof';
-    }
-
-    Dog.prototype = new Animal();
-
-    var Cat = function() {
-        this.sound = 'Meow';
-    }
-
-    Cat.prototype = new Animal();
+Wienephant.prototype = new Dogephant();
+```
 
 ---
 
-## Overriding existing methods
 
-If you want to overwrite an existing method but use the old result you
-need to `call` or `apply` the old function with the current `this` reference and `arguments`:
-
-    !javascript
-    Dog.prototype.makeSound = function() {
-        var oldSound = Animal.prototype.makeSound.apply(this, arguments);
-        return this.sound + ' ' + oldSound;
-    }
-
-    var goofy = new Dog();
-    var garfield = new Cat();
-
-    alert(goofy.makeSound());
-    alert(garfield.makeSound());
-
----
-
-## The true ECMAScript 5 way
+## Less weird: ECMAScript 5 inheritance
 
 Uses only objects and inherits with `Object.create(prototypeObject)`
 
-    !javascript
-    var Animal = {
-        sound: 'blubb',
-        makeSound: function() {
-            return this.sound + '!';
-        }
+```js
+const Elephant = {
+    legs: 4,
+    hasTrunk: true,
+    getType() {
+        return 'Mammal';
     }
+}
 
-    var Dog = Object.create(Animal);
-    var Cat = Object.create(Animal);
+const Dogephant = Object.create(Elephant);
 
-    Dog.sound = 'woof';
-    Cat.sound = 'meow';
+Dogephant.hasFur = true;
 
-    var goofy = Object.create(Dog);
-    var garfield = Object.create(Cat);
+const Wienephant = Object.create(Dogephant);
 
-    alert(goofy.makeSound());
-    alert(garfield.makeSound();
+Wienephant.isTiny = true;
+```
 
 ---
+
+## Maybe not weird: ES215 (ES6) inheritance
+
+Uses `class`, `extends` and `constructor`
+
+```js
+class Elephant {
+    constructor() {
+        this.legs = 4;
+        this.hasTrunk = true;
+    }
+
+    getType() {
+        return 'Mammal';
+    }
+}
+```
+
+---
+
+## Maybe not weird: ES215 (ES6) inheritance
+
+```javascript
+class Dogephant extends Elephant {
+    constructor() {
+        super();
+        this.hasFur = true;
+    }
+}
+
+class Wienephant extends Dogephant {
+    constructor() {
+        super();
+        this.isTiny = true;
+    }
+}
+```
