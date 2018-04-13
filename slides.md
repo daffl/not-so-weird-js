@@ -333,7 +333,10 @@ Otherwise `this` will be the global (`window`) object (or `undefined` in strict 
 Arrow functions `this` is always the same as the `this` of its surrounding context. It can __not__ be changed. Arrow functions do not have magic `arguments`.
 
 ```javascript
-// Single line arrow function
+// Single argument, single line
+const sum = (a, b) => a + b;
+
+// Multiple arguments, single line
 const sum = (a, b) => a + b;
 
 // Multi line
