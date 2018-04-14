@@ -856,7 +856,10 @@ sayHi.apply(owner, argsArray);
   <div class="slide hidden -" id="slide-19">
     <section class="slide-content"><h2 id="less-weird-arrow-functions">Less weird: Arrow functions</h2>
 <p>Arrow functions <code>this</code> is always the same as the <code>this</code> of its surrounding context. It can <strong>not</strong> be changed. Arrow functions do not have magic <code>arguments</code>.</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// Single line arrow function</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">// Single argument, single line</span>
+<span class="hljs-keyword">const</span> sum = (a, b) =&gt; a + b;
+
+<span class="hljs-comment">// Multiple arguments, single line</span>
 <span class="hljs-keyword">const</span> sum = (a, b) =&gt; a + b;
 
 <span class="hljs-comment">// Multi line</span>
@@ -869,10 +872,7 @@ sayHi.apply(owner, argsArray);
 }</code></pre>
 </section>
   </div>
-  <div class="slide hidden - inheritance" id="slide-20">
-    <section class="slide-content"></section>
-  </div>
-  <div class="slide hidden -" id="slide-21">
+  <div class="slide hidden -" id="slide-20">
     <section class="slide-content"><h2 id="kind-of-weird-javascript-inheritance">Kind of weird: JavaScript inheritance</h2>
 <p>JavaScript only knows objects. Inheritance is done by pointing an objects prototype to another object.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> Elephant = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
@@ -884,6 +884,9 @@ Elephant.prototype.getType = <span class="hljs-function"><span class="hljs-keywo
     <span class="hljs-keyword">return</span> <span class="hljs-string">'Mammal'</span>;
 }</code></pre>
 </section>
+  </div>
+  <div class="slide hidden - inheritance" id="slide-21">
+    <section class="slide-content"></section>
   </div>
   <div class="slide hidden -" id="slide-22">
     <section class="slide-content"><h2 id="kind-of-weird-javascript-inheritance">Kind of weird: JavaScript inheritance</h2>

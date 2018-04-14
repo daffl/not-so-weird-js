@@ -349,8 +349,6 @@ const sum = (...numbers) => {
 }
 ```
 
---- inheritance
-
 ---
 
 ## Kind of weird: JavaScript inheritance
@@ -367,6 +365,8 @@ Elephant.prototype.getType = function() {
     return 'Mammal';
 }
 ```
+
+--- inheritance
 
 ---
 
