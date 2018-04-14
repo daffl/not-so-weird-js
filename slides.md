@@ -64,9 +64,10 @@ __Truthyness__
 ```javascript
 const person = { name: 'David' }
 
-if(person.name) {
-    // Do stuff if property exists
-}
+// Do something if property is truthy
+if(person.name) {}
+// Do something if property exists at all
+if(typeof person.name !== 'undefined') {}
 ```
 
 __Falsy values__
@@ -334,7 +335,7 @@ Arrow functions `this` is always the same as the `this` of its surrounding conte
 
 ```javascript
 // Single argument, single line
-const sum = (a, b) => a + b;
+const square = x => x * x;
 
 // Multiple arguments, single line
 const sum = (a, b) => a + b;
@@ -364,6 +365,10 @@ const Elephant = function() {
 Elephant.prototype.getType = function() {
     return 'Mammal';
 }
+
+const dumbo = new Elephant();
+dumbo.legs // 4
+dumbo.getType(); // Mammal
 ```
 
 --- inheritance
@@ -413,7 +418,7 @@ Wienephant.isTiny = true;
 
 ---
 
-## Maybe not weird: ES215 (ES6) inheritance
+## Maybe not weird: ES2015 (ES6) classes
 
 Uses `class`, `extends` and `constructor`
 
@@ -432,7 +437,7 @@ class Elephant {
 
 ---
 
-## Maybe not weird: ES215 (ES6) inheritance
+## Maybe not weird: ES2015 (ES6) classes
 
 ```javascript
 class Dogephant extends Elephant {
